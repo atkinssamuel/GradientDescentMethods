@@ -4,7 +4,8 @@ import numpy as np
 import math
 import time
 import psutil
-
+import copy
+np.random.seed(0)
 x_train, x_valid, x_test, y_train, y_valid, y_test = ([[],[],[],[],[]], [[],[],[],[],[]],
                                                      [[],[],[],[],[]], [[],[],[],[],[]],
                                                      [[],[],[],[],[]], [[],[],[],[],[]])
@@ -23,3 +24,73 @@ def RMSE(measurements, actuals):
 
     return math.sqrt(sum/n)
 
+
+def gradientDescent():
+    xTrain = copy.deepcopy(x_train[2][:1000])
+    xTrain = np.c_[np.ones(xTrain.shape[0]), xTrain]
+    yTrain = copy.deepcopy(y_train[2][:1000])
+
+    learningRates = [[0.1, 'b'], [0.01, 'g'], [0.001, 'm'], [0.0001, 'c']]
+    maxIterations = 1000
+    iterationDomain = [i for i in range(maxIterations)]
+
+    grad = lambda x, y, w: np.expand_dims(sum(2*(np.dot(x, w) - y)*x)/y.shape[0], axis=1)
+
+    for learningRate, colorCode in learningRates:
+
+        weightsFull = np.zeros(len(xTrain[0]))
+        weightsFull = np.expand_dims(weightsFull, axis=1)
+
+        weightsStoch = np.zeros(len(xTrain[0]))
+        weightsStoch = np.expand_dims(weightsStoch, axis=1)
+        
+        gradErrors = []
+        stochErrors = []
+        minGradError = inf
+        minStochError = inf
+
+        for i in range(maxIterations):
+            # Full gradient descent:
+            weightsFull = weightsFull - learningRate * grad(xTrain, yTrain, weightsFull)
+            yPredictions = np.matmul(xTrain, weightsFull)
+            error = RMSE(yPredictions, yTrain)
+            gradErrors.append(error)
+            if error < minGradError:
+                minGradError = error
+
+            # Stochastic gradient descent:
+            randomIndex = int(np.random.random()*len(yTrain)) 
+            weightsStoch = weightsStoch - learningRate * grad(xTrain[randomIndex], yTrain[randomIndex], weightsStoch)
+            yPredictions = np.matmul(xTrain, weightsStoch)
+            error = RMSE(yPredictions, yTrain)
+            stochErrors.append(error)
+            if error < minStochError:
+                minStochError = error
+        
+        # Gradient Plotting:
+        fig, ax = plt.subplots()
+        ax.plot(iterationDomain, gradErrors, '-{}'.format(colorCode), markersize=1, \
+            label='Learning Rate = {}, Minimum Error = {}'\
+            .format(learningRate, round(minGradError, 4)))
+        plt.xlabel('Iterations')
+        plt.ylabel('Error')
+        plt.legend()
+        plt.title('Gradient Descent Error vs Iterations')
+        fig.savefig('results/GD/GDRate_{}.png'.format(learningRate))
+
+        # Stochastic Plotting:
+        fig, ax = plt.subplots()
+        ax.plot(iterationDomain, stochErrors, '-{}'.format(colorCode), markersize=1, \
+            label='Learning Rate = {} Minimum Error = {}'\
+            .format(learningRate, round(minStochError, 8)))
+        plt.xlabel('Iterations')
+        plt.ylabel('Error')
+        plt.legend()
+        plt.title('Stochastic Gradient Descent Error vs Iterations')
+        fig.savefig('results/SGD/SGDRate_{}.png'.format(learningRate))
+       
+    return 
+
+if __name__ == "__main__":
+    gradientDescent()
+    
