@@ -6,3 +6,7 @@ Question 1:
 - As data, use the pumadyn32nm dataset
 	- Use only the first 1000 data points on the training set to predict on the test set
 - Predict on the test set and then present the test RMSE
+
+Question 1 Requirements:
+- Present the final test RMSE
+Question 2 Requirements:
