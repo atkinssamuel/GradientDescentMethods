@@ -52,13 +52,17 @@ def gradientDescent():
     xTrain = np.c_[np.ones(xTrain.shape[0]), xTrain]
     yTrain = copy.deepcopy(y_train[2][:1000])
 
-    learningRates = [[0.1, 'b'], [0.01, 'g'], [0.005, 'y'], [0.001, 'm'], [0.0001, 'c']]
+    learningRates = [[0.1, 'b'], [0.01, 'g'], [0.001, 'm'], [0.0001, 'c'], [0.00001, 'y']]
     maxIterations = 1000
     iterationDomain = [i for i in range(maxIterations)]
 
     grad = lambda x, y, w: np.expand_dims(sum(2*(np.dot(x, w) - y)*x)/y.shape[0], axis=1)
+
     optimalWeightsFull = None
     optimalWeightsStoch = None
+
+    minGradError = inf
+    minStochError = inf
 
     for learningRate, colorCode in learningRates:
 
@@ -70,8 +74,9 @@ def gradientDescent():
         
         gradErrors = []
         stochErrors = []
-        minGradError = inf
-        minStochError = inf
+        learningRateErrGrad = inf
+        learningRateErrStoch = inf
+        
 
         for i in range(maxIterations):
             # Full gradient descent:
@@ -79,6 +84,8 @@ def gradientDescent():
             yPredictions = np.matmul(xTrain, weightsFull)
             error = RMSE(yPredictions, yTrain)
             gradErrors.append(error)
+            if error < learningRateErrGrad:
+                learningRateErrGrad = error
             if error < minGradError:
                 minGradError = error
                 optimalWeightsFull = weightsFull
@@ -89,6 +96,8 @@ def gradientDescent():
             yPredictions = np.matmul(xTrain, weightsStoch)
             error = RMSE(yPredictions, yTrain)
             stochErrors.append(error)
+            if error < learningRateErrStoch:
+                learningRateErrStoch = error
             if error < minStochError:
                 minStochError = error
                 optimalWeightsStoch = weightsStoch
@@ -97,7 +106,7 @@ def gradientDescent():
         fig, ax = plt.subplots()
         ax.plot(iterationDomain, gradErrors, '-{}'.format(colorCode), markersize=1, \
             label='Learning Rate = {}, Minimum Error = {}'\
-            .format(learningRate, round(minGradError, 4)))
+            .format(learningRate, round(learningRateErrGrad, 4)))
         plt.xlabel('Iterations')
         plt.ylabel('Error')
         plt.legend()
@@ -108,7 +117,7 @@ def gradientDescent():
         fig, ax = plt.subplots()
         ax.plot(iterationDomain, stochErrors, '-{}'.format(colorCode), markersize=1, \
             label='Learning Rate = {} Minimum Error = {}'\
-            .format(learningRate, round(minStochError, 8)))
+            .format(learningRate, round(learningRateErrStoch, 8)))
         plt.xlabel('Iterations')
         plt.ylabel('Error')
         plt.legend()
@@ -122,10 +131,10 @@ def gradientDescent():
     yPredictionsStoch = np.matmul(xTest, optimalWeightsStoch)
     finalRMSEFull = RMSE(yPredictionsFull, yTest)
     finalRMSEStoch = RMSE(yPredictionsStoch, yTest)
-    print("Minimum Full Gradient Descent Error = {}".format(minGradError))
-    print("Test RMSE Full Gradient Descent = {}".format(finalRMSEFull))
-    print("Minimum SGD Error = {}".format(minStochError))
-    print("Test RMSE SGD = {}".format(finalRMSEStoch))
+    print("\nMinimum Full Gradient Descent Training Error = {}".format(minGradError))
+    print("Test RMSE Full Gradient Descent = {}\n".format(finalRMSEFull))
+    print("Minimum SGD Training Error = {}".format(minStochError))
+    print("Test RMSE SGD = {}\n".format(finalRMSEStoch))
     return 
 
 def logisticGradientDescent():
@@ -135,12 +144,15 @@ def logisticGradientDescent():
     yTrain = yTrain[:, (1,)]
     
 
-    learningRates = [[0.1, 'b'], [0.01, 'g'], [0.001, 'm'], [0.0001, 'c']]
+    learningRates = [[0.1, 'b'], [0.01, 'g'], [0.001, 'm'], [0.0001, 'c'], [0.00001, 'y']]
     maxIterations = 1000
     iterationDomain = [i for i in range(maxIterations)]
 
     optimalWeightsFullLikelihood = None
     optimalWeightsStochLikelihood = None
+
+    minGradLog = inf
+    minStochLog = inf
 
     for learningRate, colorCode in learningRates:
 
@@ -152,14 +164,17 @@ def logisticGradientDescent():
         
         gradLogs = []
         stochLogs = []
-        minGradLog = inf
-        minStochLog = inf
+        learningRateLogGrad = inf
+        learningRateLogStoch = inf
+        
 
         for i in range(maxIterations):
             # Full gradient descent:
             weightsFull = weightsFull + learningRate * likelihoodGradient(xTrain, yTrain, weightsFull)
             logValue = -logLikelihood(xTrain, yTrain, weightsFull)
             gradLogs.append(logValue)
+            if logValue[0] < learningRateLogGrad:
+                learningRateLogGrad = logValue[0]
             if logValue[0] < minGradLog:
                 minGradLog = logValue[0]
                 optimalWeightsFullLikelihood = weightsFull
@@ -169,6 +184,8 @@ def logisticGradientDescent():
             weightsStoch = weightsStoch + learningRate * likelihoodGradient(xTrain[randomIndex].reshape(1, -1), yTrain[randomIndex].reshape(1, -1), weightsStoch)
             logValue = -logLikelihood(xTrain, yTrain, weightsStoch)
             stochLogs.append(logValue)
+            if logValue[0] < learningRateLogStoch:
+                learningRateLogStoch = logValue[0]
             if logValue[0] < minStochLog:
                 minStochLog = logValue[0]
                 optimalWeightsStochLikelihood = weightsStoch
@@ -177,7 +194,7 @@ def logisticGradientDescent():
         fig, ax = plt.subplots()
         ax.plot(iterationDomain, gradLogs, '-{}'.format(colorCode), markersize=1, \
             label='Learning Rate = {}, Minimum Error = {}'\
-            .format(learningRate, round(minGradLog, 4)))
+            .format(learningRate, round(learningRateLogGrad, 4)))
         plt.xlabel('Iterations')
         plt.ylabel('Negative Log Likelihood')
         plt.legend()
@@ -188,7 +205,7 @@ def logisticGradientDescent():
         fig, ax = plt.subplots()
         ax.plot(iterationDomain, stochLogs, '-{}'.format(colorCode), markersize=1, \
             label='Learning Rate = {} Minimum Error = {}'\
-            .format(learningRate, round(minStochLog, 8)))
+            .format(learningRate, round(learningRateLogStoch, 8)))
         plt.xlabel('Iterations')
         plt.ylabel('Negative Log Likelihood')
         plt.legend()
