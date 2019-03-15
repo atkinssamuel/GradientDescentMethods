@@ -250,6 +250,6 @@ def gradDescentLogistic(name):
     
 if __name__ == '__main__':
     
-    #Q1Results = gradDescent('pumadyn32nm')
+    Q1Results = gradDescent('pumadyn32nm')
     
-    Q2Results = gradDescentLogistic('iris')
+    #Q2Results = gradDescentLogistic('iris')

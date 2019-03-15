@@ -1,12 +1,10 @@
-Question 1:
-- Use gradient descent to learn the weights of a linear regression model via minimization of the least-squares loss function
-	- In other words, take the least-squares loss function and apply gradient descent to it to find the optimal weights
-	- Initialize all weights to zero
-	- Mini-batch size of 1
-- As data, use the pumadyn32nm dataset
-	- Use only the first 1000 data points on the training set to predict on the test set
-- Predict on the test set and then present the test RMSE
-
-Question 1 Requirements:
-- Present the final test RMSE
-Question 2 Requirements:
+How to run:
+- The gradientDescent file contains the entire implementation of the assignment
+	- The function "gradientDescent" pertains to question 1 only
+	- The function logisticGradientDescent" pertains to question 2 only
+- Currently, both functions are uncommented and ready to run in the __main__ block
+	- To run just one question, simply call that function
+- All neccessary figures will autogenerate and the relevant values will print
+- The files for question 1 will automatically save in folders titled "results/GD" and "results/SGD"
+- The files for question 2 will automatically save in folders titled "results/LogGD" and "results/LogSGD"
+	- These results are already contained in the submitted zip folder
