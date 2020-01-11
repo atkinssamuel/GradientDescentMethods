@@ -3,7 +3,7 @@ This project includes a Python implementation of an MLP used to contrast gradien
 
 ### "pumadyn32nm" Dataset:
 #### Gradient Descent:
-The first 1000 training data points of the "pumadyn32nm" dataset were used. The following learning rates were tested: 0.1, 0.01, 0.001, 0.0001, 0.00001. The training error plots pertaining to each learning rate are illustrated in the Figures below:
+The first 1000 training data points of the "pumadyn32nm" dataset were used. The following learning rates were explored: 0.1, 0.01, 0.001, 0.0001, 0.00001. The training error plots pertaining to each learning rate are illustrated in the Figures below:
 
 ![](results/GD/GDRate_1e-05.png)
 
