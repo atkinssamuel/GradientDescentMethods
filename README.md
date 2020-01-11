@@ -72,7 +72,7 @@ Gradient descent was also applied to the "iris" dataset. The negative logarithmi
 
 *Figure 14: GD negative log likelihood plot with an LR of 0.1 when applied to the "iris" dataset*
 
-Smooth training error plots are observed. As the learning rate increases, we see more rapid decreases in the negative log likelihood. When the leraning rate reached 0.1, howeover, oscillation and divergence occurs.
+Smooth training error plots are observed. As the learning rate increases, we see more rapid decreases in the negative log likelihood. When the learning rate reached 0.1, howeover, oscillation and divergence occurs.
 
 #### Stochastic Gradient Descent:
 Similarly, for the same learning rates as above, the negative logarithmic likelihood was plotted for stochastic gradient descent. These results are shown below:
