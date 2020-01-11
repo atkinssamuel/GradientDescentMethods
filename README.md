@@ -52,10 +52,50 @@ Oscillation and instability are present in every plot. From the results above, w
 #### Gradient Descent:
 Gradient descent was also applied to the "iris" dataset. The negative logarithmic likelihood plots for learning rates of 0.1, 0.01, 0.001, 0.0001, 0.00001 are delineated below:
 
+![](results/LogGD/GDRate_1e-05.png)
+
+*Figure 10: GD negative log likelihood plot with an LR of 0.00001 when applied to the "iris" dataset*
+
+![](results/LogGD/GDRate_0.0001.png)
+
+*Figure 11: GD negative log likelihood plot with an LR of 0.0001 when applied to the "iris" dataset*
+
+![](results/LogGD/GDRate_0.001.png)
+
+*Figure 12: GD negative log likelihood plot with an LR of 0.001 when applied to the "iris" dataset*
+
+![](results/LogGD/GDRate_0.01.png)
+
+*Figure 13: GD negative log likelihood plot with an LR of 0.01 when applied to the "iris" dataset*
+
+![](results/LogGD/GDRate_0.1.png)
+
+*Figure 14: GD negative log likelihood plot with an LR of 0.1 when applied to the "iris" dataset*
+
 Smooth training error plots are observed. As the learning rate increases, we see more rapid decreases in the negative log likelihood. When the leraning rate reached 0.1, howeover, oscillation and divergence occurs.
 
 #### Stochastic Gradient Descent:
 Similarly, for the same learning rates as above, the negative logarithmic likelihood was plotted for stochastic gradient descent. These results are shown below:
+
+![](results/LogSGD/SGDRate_1e-05.png)
+
+*Figure 15: SGD negative log likelihood plot with an LR of 0.00001 when applied to the "iris" dataset*
+
+![](results/LogSGD/SGDRate_0.0001.png)
+
+*Figure 16: SGD negative log likelihood plot with an LR of 0.0001 when applied to the "iris" dataset*
+
+![](results/LogSGD/SGDRate_0.001.png)
+
+*Figure 17: SGD negative log likelihood plot with an LR of 0.001 when applied to the "iris" dataset*
+
+![](results/LogSGD/SGDRate_0.01.png)
+
+*Figure 18: SGD negative log likelihood plot with an LR of 0.01 when applied to the "iris" dataset*
+
+![](results/LogSGD/SGDRate_0.1.png)
+
+*Figure 19: SGD negative log likelihood plot with an LR of 0.1 when applied to the "iris" dataset*
 
 From the above, we can see that larger learning rates create more rapid convergence, but are prone to instability and oscillation. When compared to the gradient descent results, we can see that gradient descent produces more reliable results with a stronger global minimum. 
 
