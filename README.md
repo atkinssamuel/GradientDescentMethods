@@ -1,6 +1,7 @@
 ### Project Description:
-This project includes a Python implementation of an MLP used to contrast gradient descent with stochastic gradient descent. Both gradient descent and stochastic gradient descent were implemented for the pumadyn32nm dataset. 
-### pumadyn32nm Dataset:
+This project includes a Python implementation of an MLP used to contrast gradient descent with stochastic gradient descent on two datasets. The first dataset is the "pumadyn32nm" dataset. This dataset is created using a robot arm simulator and contains 32 floating point features. The objective of the network when applied to this dataset is to estimate the angular acceleration of one of the robot arm links. The second dataset is called the "iris" flower dataset. This dataset contains just 4 floating point features and 3 classification categories pertaining to 3 different flower types. Both gradient descent and stochastic gradient descent were manually applied without the use of PyTorch to both datasets. The results are illustrated below.
+
+### "pumadyn32nm" Dataset:
 #### Gradient Descent:
 The first 1000 training data points of the pumadyn32nm dataset were used. The following learning rates were tested: [0.1, 0.01, 0.001, 0.0001, 0.00001]. The error plots pertaining to each learning rate are illustrated in the Figures below:
 
@@ -11,20 +12,10 @@ For stochastic gradient descent, the following learning rates were used: [0.01, 
 
 Oscillation and instability are present in every plot. From the results above, we can conclude the stability that comes from the nature of gradient descent was neccessary for the application of an MLP to the pumadyn32nm dataset.
 
-### iris Dataset:
+### "iris" Dataset:
 #### Gradient Descent:
-
+Gradient descent was applied to the iris dataset
 #### Stochastic Gradient Descent:
 
 
 
-How to run:
-- The gradientDescent file contains the entire implementation of the assignment
-	- The function "gradientDescent" pertains to question 1 only
-	- The function logisticGradientDescent" pertains to question 2 only
-- Currently, both functions are uncommented and ready to run in the __main__ block
-	- To run just one question, simply call that function
-- All neccessary figures will autogenerate and the relevant values will print
-- The files for question 1 will automatically save in folders titled "results/GD" and "results/SGD"
-- The files for question 2 will automatically save in folders titled "results/LogGD" and "results/LogSGD"
-	- These results are already contained in the submitted zip folder
