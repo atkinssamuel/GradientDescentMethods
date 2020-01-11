@@ -26,6 +26,26 @@ From the Figures above, small learning rates did not allow the network to learn 
 #### Stochastic Gradient Descent:
 For stochastic gradient descent, the following learning rates were used: 0.01, 0.001, 0.0001, 0.00001. Just as above, the error plots are illustrated below:
 
+![](results/SGD/SGDRate_1e-05.png)
+
+*Figure 5: SGD error plot with an LR of 0.00001 when applied to the "pumadyn32nm" dataset*
+
+![](results/SGD/SGDRate_0.0001.png)
+
+*Figure 6: SGD error plot with an LR of 0.0001 when applied to the "pumadyn32nm" dataset*
+
+![](results/SGD/SGDRate_0.001.png)
+
+*Figure 7: GD error plot with an LR of 0.001 when applied to the "pumadyn32nm" dataset*
+
+![](results/SGD/SGDRate_0.01.png)
+
+*Figure 8: GD error plot with an LR of 0.01 when applied to the "pumadyn32nm" dataset*
+
+![](results/SGD/SGDRate_0.1.png)
+
+*Figure 9: SGD error plot with an LR of 0.1 when applied to the "pumadyn32nm" dataset*
+
 Oscillation and instability are present in every plot. From the results above, we can conclude the stability that comes from the nature of gradient descent was neccessary for the application of an MLP to the pumadyn32nm dataset.
 
 ### "iris" Dataset:
